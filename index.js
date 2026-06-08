@@ -15,7 +15,7 @@ const shipmentRoutes = require('./routes/shipmentRoutes');
 const app = express();
 const PORT = process.env.PORT || 3000; // Gunakan satu port saja
 
-// Middleware
+// Middleware   
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -47,13 +47,12 @@ app.get('/', (req, res) => {
     res.send(`🚀 Server Utama MBG berjalan di port ${PORT}`);
 });
 
-// Database Sync & Server Listen
 sequelize.sync({ alter: true })
     .then(() => {
-        console.log('--------------------------------------------------');
-        console.log(`✅ Database [${process.env.DB_NAME || 'mbg'}] Terkoneksi`);
-        console.log(`📖 Dokumentasi API: http://localhost:${PORT}/api-docs`);
-        console.log('--------------------------------------------------');
-        app.listen(PORT, () => console.log(`🚀 Server berjalan di http://localhost:${PORT}`));
+        console.log('✅ Database terkoneksi');
     })
-    .catch(err => console.error('❌ Gagal sinkronisasi database:', err.message));
+    .catch(err => {
+        console.error('❌ Gagal sinkronisasi database:', err.message);
+    });
+
+module.exports = app;
