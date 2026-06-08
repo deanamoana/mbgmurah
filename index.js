@@ -19,4 +19,18 @@ app.get('/', async (req, res) => {
     }
 });
 
+const sequelize = require('./config/db');
+
+app.get('/db-test', async (req, res) => {
+    try {
+        await sequelize.authenticate();
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            error: err.message
+        });
+    }
+});
+
 module.exports = app;
